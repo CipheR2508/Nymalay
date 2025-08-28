@@ -98,7 +98,7 @@ function BrandHero(): JSX.Element {
 
 function About(): JSX.Element {
 	return (
-		<section id="about" className="bg-gradient-to-b from-white to-rose-50/60 dark:from-slate-950 dark:to-slate-900">
+		<section id="about" className="reveal bg-gradient-to-b from-white to-rose-50/60 dark:from-slate-950 dark:to-slate-900">
 			<div className="mx-auto max-w-6xl px-4 py-14">
 				<h2 className="text-center text-3xl font-extrabold text-rose-600">About Dr. Arya Nerli</h2>
 				<p className="mx-auto mt-3 max-w-3xl text-center text-slate-700 dark:text-slate-300">
@@ -136,7 +136,7 @@ function Services(): JSX.Element {
 		{ title: 'Lifestyle Counseling', desc: 'Guidance for healthy living and wellness maintenance' },
 	];
 	return (
-		<section id="services" className="bg-gradient-to-b from-rose-50/60 to-white dark:from-slate-900 dark:to-slate-950">
+		<section id="services" className="reveal bg-gradient-to-b from-rose-50/60 to-white dark:from-slate-900 dark:to-slate-950">
 			<div className="mx-auto max-w-6xl px-4 py-14">
 				<h2 className="text-center text-3xl font-extrabold text-rose-600">Our Services</h2>
 				<p className="mx-auto mt-3 max-w-3xl text-center text-slate-700 dark:text-slate-300">Comprehensive homoeopathic treatments for your health and wellness</p>
@@ -170,7 +170,7 @@ function Services(): JSX.Element {
 
 function Contact(): JSX.Element {
 	return (
-		<section id="contact" className="bg-gradient-to-b from-white to-rose-50 dark:from-slate-950 dark:to-slate-900">
+		<section id="contact" className="reveal bg-gradient-to-b from-white to-rose-50 dark:from-slate-950 dark:to-slate-900">
 			<div className="mx-auto grid max-w-6xl gap-8 px-4 py-14 md:grid-cols-2">
 				<div className="space-y-6">
 					<div className="rounded-2xl bg-white p-6 shadow-lg ring-1 ring-rose-100 dark:bg-slate-900 dark:ring-slate-800">
@@ -242,6 +242,21 @@ function Footer(): JSX.Element {
 }
 
 function App(): JSX.Element {
+	React.useEffect(() => {
+		if ('IntersectionObserver' in window) {
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('reveal-visible');
+						observer.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.15 });
+			document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+			return () => observer.disconnect();
+		}
+	}, []);
+
 	return (
 		<div className="min-h-screen bg-white text-gray-900 dark:bg-slate-950 dark:text-slate-100">
 			<Header />
